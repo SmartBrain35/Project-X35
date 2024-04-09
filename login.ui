@@ -371,13 +371,23 @@
      <property name="text">
       <string>Log in</string>
      </property>
+     <property name="icon">
+      <iconset resource="Materials.qrc">
+       <normaloff>:/new/Icons/Access.png</normaloff>:/new/Icons/Access.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>27</width>
+       <height>27</height>
+      </size>
+     </property>
     </widget>
     <widget class="QPushButton" name="btn_exit">
      <property name="geometry">
       <rect>
-       <x>230</x>
+       <x>240</x>
        <y>270</y>
-       <width>141</width>
+       <width>131</width>
        <height>41</height>
       </rect>
      </property>
@@ -391,6 +401,16 @@
      </property>
      <property name="text">
       <string>Exit</string>
+     </property>
+     <property name="icon">
+      <iconset resource="Materials.qrc">
+       <normaloff>:/new/Icons/Close Window.png</normaloff>:/new/Icons/Close Window.png</iconset>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>27</width>
+       <height>27</height>
+      </size>
      </property>
     </widget>
     <widget class="Line" name="line">
@@ -514,8 +534,18 @@
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
+   <zorder>login_frame</zorder>
+   <zorder>flash_progress</zorder>
+   <zorder>lbl_loading_text</zorder>
+   <zorder>label_4</zorder>
+   <zorder>label_5</zorder>
+   <zorder>label_3</zorder>
+   <zorder>label_10</zorder>
+   <zorder>line_2</zorder>
   </widget>
  </widget>
- <resources/>
+ <resources>
+  <include location="Materials.qrc"/>
+ </resources>
  <connections/>
 </ui>

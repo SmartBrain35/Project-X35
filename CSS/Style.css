@@ -1,0 +1,24 @@
+QTabWidget#my_sales_tabs::tab-bar
+{
+    alignment:center;
+	background-image: url("");
+
+}
+
+
+QTabWidget#my_settings_tabs::tab-bar
+{
+	alignment:center;
+
+}
+
+
+QPushButton#sale_btn_add_invoiceList
+{
+	border-color: rgb(20, 235, 255);
+	selection-backgr
+	ound-color: rgb(116, 105, 139);
+	selection-color: rgb(255, 255, 255);
+}
+
+
