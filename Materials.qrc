@@ -1,0 +1,31 @@
+<RCC>
+    <qresource prefix="/new">
+        <file>CSS/Style.css</file>
+        <file>images/n2.jpg</file>
+        <file>images/n44.jpg</file>
+        <file>Drugs/drugs_List.txt</file>
+        <file>Icons/3D House.png</file>
+        <file>Icons/Access.png</file>
+        <file>Icons/Add Shopping Cart.png</file>
+        <file>Icons/Alarm.png</file>
+        <file>Icons/Circled User Female Skin Type 6.png</file>
+        <file>Icons/Close Window.png</file>
+        <file>Icons/DatePickerDialog.png</file>
+        <file>Icons/Defective Product.png</file>
+        <file>Icons/Edit Property.png</file>
+        <file>Icons/Gears.png</file>
+        <file>Icons/Invoice.png</file>
+        <file>Icons/Lock.png</file>
+        <file>Icons/Logout Rounded.png</file>
+        <file>Icons/Megaphone.png</file>
+        <file>Icons/Minus.png</file>
+        <file>Icons/Presentation.png</file>
+        <file>Icons/Refuse.png</file>
+        <file>Icons/Registration.png</file>
+        <file>Icons/Remove.png</file>
+        <file>Icons/Save.png</file>
+        <file>Icons/Stocks.png</file>
+        <file>Icons/Sync.png</file>
+        <file>Icons/Total Sales.png</file>
+    </qresource>
+</RCC>

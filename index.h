@@ -2,6 +2,20 @@
 #define INDEX_H
 
 #include <QWidget>
+#include <QDesktopWidget>
+//time and date
+#include <ctime>
+#include <QTimer>
+#include <chrono>
+#include <sstream>
+#include <iomanip>
+#include <QDebug>
+
+//text browsing
+#include <QFile>
+#include <QTextStream>
+#include <QStringListModel>
+#include <QTimer>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Index; }
@@ -15,7 +29,24 @@ public:
     Index(QWidget *parent = nullptr);
     ~Index();
 
+
+public Q_SLOT:   //function declarations
+    //void updateTime();//slot to update time
+    void UpdateSearchDrugOutcome(const QString &text);
+    private slots:
+        void on_btn_exit_clicked();
+
+    void on_btn_logout_clicked();
+
+    void on_sale_btn_discard_clicked();
+
+    void on_sale_btn_new_records_clicked();
+
 private:
     Ui::Index *ui;
+
+    //text browsing class
+    QStringList drugsData;
+
 };
 #endif // INDEX_H
