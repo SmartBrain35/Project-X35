@@ -9,13 +9,19 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    charts.cpp \
+    database_manager.cpp \
     login.cpp \
     main.cpp \
-    index.cpp
+    index.cpp \
+    soundz.cpp
 
 HEADERS += \
+    charts.h \
+    database_manager.h \
     index.h \
-    login.h
+    login.h \
+    soundz.h
 
 FORMS += \
     index.ui \

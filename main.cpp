@@ -23,9 +23,9 @@ int main(int argc, char *argv[])
     QString css = stream.readAll(); //then app invokes it
     beauty_file.close(); //close opened css file
 
-    a.setStyleSheet(css);
+    qApp->setStyleSheet(css);
 
-    Login app; //first thing to appear when the app run is the splash form
+    Index app; //first thing to appear when the app run is the splash form
     app.show();
 
     return a.exec();

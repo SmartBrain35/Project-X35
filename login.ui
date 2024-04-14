@@ -28,6 +28,9 @@
    <property name="text">
     <string/>
    </property>
+   <property name="pixmap">
+    <pixmap resource="Materials.qrc">:/new/images/n44.jpg</pixmap>
+   </property>
    <property name="scaledContents">
     <bool>true</bool>
    </property>
@@ -491,15 +494,21 @@
      <property name="frameShape">
       <enum>QFrame::Box</enum>
      </property>
+     <property name="pixmap">
+      <pixmap resource="Materials.qrc">:/new/Icons/Circled User Female Skin Type 6.png</pixmap>
+     </property>
      <property name="scaledContents">
       <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
      </property>
     </widget>
    </widget>
    <widget class="QLabel" name="label_10">
     <property name="geometry">
      <rect>
-      <x>960</x>
+      <x>950</x>
       <y>550</y>
       <width>111</width>
       <height>21</height>

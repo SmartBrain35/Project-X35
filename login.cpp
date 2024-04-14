@@ -6,9 +6,6 @@ Login::Login(QWidget *parent) : QWidget(parent), ui(new Ui::Login)
 {
     ui->setupUi(this);
 
-    //set background image
-    ui->bg_pic1->setPixmap(QPixmap("D:/Projects/AppDev/XNXX_35/images/n33.jpg"));
-
     //making the stock form framless
     setWindowFlags(Qt::FramelessWindowHint);
 
