@@ -1,6 +1,3 @@
-CREATE DATABASE PHARMACY;
-USE PHARMACY;
-GO
 
 -------------------------------------------------------------STOCK------------------------------------------------
 CREATE TABLE Stocks

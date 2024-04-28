@@ -1,6 +1,14 @@
-QT       += core gui
+INCLUDEPATH += D:/MySQL/MySQL Connector C++ 8.3/include/jdbc
+LIBS += -L/D:/MySQL/MySQL Connector C++ 8.3/lib64
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+QT += core gui sql charts
+
+QT += widgets texttospeech
+requires(qtHaveModule(gui))
+qtHaveModule(gui): requires(qtConfig(combobox))
+
+
+greaterThan(QT_MAJOR_VERSION, 5): QT += widgets
 
 CONFIG += c++11
 
@@ -13,15 +21,13 @@ SOURCES += \
     database_manager.cpp \
     login.cpp \
     main.cpp \
-    index.cpp \
-    soundz.cpp
+    index.cpp
 
 HEADERS += \
     charts.h \
     database_manager.h \
     index.h \
-    login.h \
-    soundz.h
+    login.h
 
 FORMS += \
     index.ui \
