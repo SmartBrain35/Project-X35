@@ -1,10 +1,13 @@
 #include "index.h"
 #include "ui_index.h"
 #include "login.h"
+#include <QBuffer>
 
 Index::Index(QWidget *parent): QWidget(parent), ui(new Ui::Index), m_speech(0)
 {
     ui->setupUi(this);
+
+
 
     //detecting screen size and fill the form wholy with it
     setContentsMargins(-1, 0, 0, 0);
@@ -43,9 +46,13 @@ Index::Index(QWidget *parent): QWidget(parent), ui(new Ui::Index), m_speech(0)
     QObject::connect(ui->btn_Stock, &QPushButton::clicked, this, [=](){navigatePages(2);});
     QObject::connect(ui->btn_statistics, &QPushButton::clicked, this, [=](){navigatePages(3);});
 
-    //******************connect buttons with the slot function to switch between the pages
+    //connect buttons with the slot function to switch between the daily sales statistics form
     QObject::connect(ui->btn_next, &QPushButton::clicked, this, &Index::graphicPageNavigation);
     QObject::connect(ui->btn_back, &QPushButton::clicked, this, &Index::graphicPageNavigation);
+
+    //****connect buttons with the slot function to switch between report forms
+    QObject::connect(ui->btn_previous, &QPushButton::clicked, this, [=](){reportPageNavigation(0);});
+    QObject::connect(ui->btn_forward, &QPushButton::clicked, this, [=](){reportPageNavigation(1);});
 
     //****setting up and call sound implementaion
     QLoggingCategory::setFilterRules(QStringLiteral("qt.speech.tts=true \n qt.speech.tts.*=true"));
@@ -65,14 +72,29 @@ Index::Index(QWidget *parent): QWidget(parent), ui(new Ui::Index), m_speech(0)
     connect(ui->rate_slider, &QSlider::valueChanged, this, &Index::setRate);
     connect(ui->volume_slider, &QSlider::valueChanged, this, &Index::setVolume);
     connect(ui->engine, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Index::engineSelected);
+
+    //system tray implementation
+    trayIcon = new QSystemTrayIcon(this);
+    trayIcon->setIcon(QIcon(":/new/Icons/Megaphone.png"));
+
+    trayMenu = new QMenu();
+    trayMenu->addAction("Action activated");
+    connect(trayMenu->actions().at(0), &QAction::triggered, this, &Index::HandleACtion);
+    trayIcon->setContextMenu(trayMenu);
+
+    //current animating time on the status bar slot called
+    timer2 = new QTimer(this);
+    connect(timer2, &QTimer::timeout, this, &Index::updateTime);
+    timer2->start();
 }
 
 Index::~Index()
 {
     delete ui;
+
 }
 
-//text browsing from sale page while typing drug name
+//text browsing from external file from sale page while typing drug name
 void Index::UpdateSearchDrugOutcome(const QString &text)
 {
     QStringList My_Drugs;
@@ -113,6 +135,8 @@ void Index::on_btn_logout_clicked()
     ui->btn_Stock->setDisabled(true);
     ui->btn_setting->setDisabled(true);
     ui->btn_statistics->setDisabled(true);
+
+    m_speech->stop();
 }
 
 //clear payment method inputs
@@ -130,9 +154,7 @@ void Index::on_sale_btn_new_records_clicked()
     ui->sale_txt_batchCode->clear();
     ui->sale_drug_name->clear();
     ui->sale_quantity_counter->clear();
-    ui->txt_customer_id->clear();
     ui->txt_customer_name->clear();
-    ui->txt_customer_address->clear();
     ui->txt_customer_phone->clear();
 }
 
@@ -146,11 +168,13 @@ void Index::on_engine_On_clicked()
     ui->btn_statistics->setDisabled(false);
     ui->stackedWidget->setCurrentIndex(0); //open sales form first
     ui->my_sales_tabs->setCurrentIndex(0);
+    ui->engine_On->setEnabled(false);
 
     //testing expiring date with read out message
     QDate curDate = QDate::currentDate();
     if(curDate == curDate)
     {
+        trayIcon->show();
         ReadLogMessage("Ideal Milk item with id number SP11004 on shell 12J has been expired\n action need to be taken in stock");
     }
 }
@@ -163,6 +187,8 @@ void Index::on_engine_Off_clicked()
     ui->btn_Stock->setDisabled(true);
     ui->btn_setting->setDisabled(true);
     ui->btn_statistics->setDisabled(true);
+    ui->engine_On->setEnabled(true);
+    m_speech->stop(); //stop voice
 }
 
 //browsing image file for item on stock UI
@@ -209,7 +235,6 @@ void Index::navigatePages(int index)
     ui->stackedWidget->setCurrentIndex(index);
 }
 
-
 //slot function to switch between graphic view daily statistics form
 void Index::graphicPageNavigation()
 {
@@ -229,6 +254,12 @@ void Index::graphicPageNavigation()
             ui->visual_stackedWidget->setCurrentIndex(previousPage);
         }
     }
+}
+
+//slot function to switch between graphic view on report form
+void Index::reportPageNavigation(int index)
+{
+    ui->stackedWidget_2->setCurrentIndex(index);
 }
 
 //sound slots
@@ -351,7 +382,15 @@ void Index::localeChanged(const QLocale &locale)
     connect(ui->voice, static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this, &Index::voiceSelected);
 }
 
-//read out expire message
+//tray message slot
+void Index::trayMessage(const QString &title, const QString &message, int duration)
+{
+    trayIcon->showMessage(title, message);
+    connect(timer, &QTimer::timeout, this, &Index::HandleACtion);
+    timer->start(duration);
+}
+
+//read out expire alert message
 void Index::ReadLogMessage(QString log)
 {
     ui->volume_slider->setValue(80); //set volume to 80%
@@ -360,26 +399,125 @@ void Index::ReadLogMessage(QString log)
     ui->voice->setCurrentIndex(0); //select female voice
     ui->log_message->setPlainText(log);//the message or alert
     m_speech->say(ui->log_message->toPlainText());//voice out the alert
+    trayMessage("Expiration Alert", ui->log_message->toPlainText(), 12000); //call tray message display
 }
 
-
-void Index::on_btn_connect_clicked()
+//action to be taken slot
+void Index::HandleACtion()
 {
-    //database class
-    QSqlDatabase mdb = QSqlDatabase::addDatabase("MYSQL");
-    mdb.setHostName("localhost");
-    mdb.setDatabaseName("pharmacyscript");
-    mdb.setPort(3300);
-    mdb.setUserName("root");
-    mdb.setPassword("smartgirl@35");
-
-    if(mdb.open())
-    {
-        qDebug("connection has established successfuly");
-    }else
-
-        qDebug("connection failed to established");
+    trayIcon->hide();
 }
 
+//current time slot
+void Index::updateTime()
+{
+    QTime myTime = QTime::currentTime();
+    QString timeString = myTime.toString("hh : mm : ss AP");
+    ui->lbl_time->setText(timeString);
+}
 
+void Index::on_btn_add_NewUser_clicked()
+{
+    QString idcard = ui->settings_user_Id->text();
+    QString name = ui->settings_user_name->text();
+    QString status;
+    if(ui->admin_radioButton->isChecked())
+    {
+        status = ui->admin_radioButton->text();
+    }else if(ui->sales_person_radioButton->isChecked())
+    {
+        status = ui->sales_person_radioButton->text();
+    }else if(ui->supervisor_radioButton->isChecked())
+    {
+        status = ui->supervisor_radioButton->text();
+    }else
+    {
+        status = "not specified";
+    }
+
+    QString phone = ui->settings_user_phone->text();
+    QString email = ui->settings_user_email->text();
+    QString pass = ui->settings_user_password->text();
+    QImage photo = ui->user_photo->pixmap()->toImage();
+    QDate dDate = QDate::currentDate();
+
+    //NewUser function is method responsible for the inserting query in the Databasehandler class
+    handler.NewUsers(idcard, name, status, phone, email, pass, photo, dDate);
+}
+
+//sales inputs slot
+void Index::on_sale_btn_save_clicked()
+{
+    //generating random invoice id
+    QRandomGenerator rand;
+    int random = rand.bounded(1000, 9999);
+    QString randomString = QString::number(random);
+
+    QString prefix = "xp-";
+    prefix.append(randomString);
+    ui->invoice_id_label->text() = prefix; //showing result via Qlabel on sales UI
+
+    QString sales_iD = prefix;
+    QString batchCode = ui->sale_txt_batchCode->text();
+    QString itemName = ui->sale_drug_name->text();
+    QString category = ui->sale_txt_category->currentText();
+    QString quantityStatus = ui->sale_quantity_status->currentText();
+    int quantity = ui->sale_quantity_counter->value();
+    float Sellingprice = ui->sale_txt_price->text().toFloat();
+
+    QString recommend;// radio button
+    if(ui->sale_kids_radiaButton->isChecked())
+    {
+        recommend = ui->sale_kids_radiaButton->text();
+    }else if(ui->sale_adult_radiaButton->isChecked())
+    {
+        recommend = ui->sale_adult_radiaButton->text();
+    }else if(ui->sale_male_radiaButton->isChecked())
+    {
+        recommend = ui->sale_male_radiaButton->text();
+    }else if(ui->sale_female__radiaButton->isChecked())
+    {
+        recommend = ui->sale_female__radiaButton->text();
+    }else
+    {
+        recommend = "not specified";
+    }
+
+    QString shell = ui->txt_shell_Id->text();
+    QString description = ui->sale_description_edit->toPlainText();
+    int remains = ui->sale_lcd_remain->value();
+    QDate expireDate = QDate::currentDate();
+    float tax = ui->sale_lcd_tax->value();
+    float discount = ui->sale_show_discount->text().toFloat();
+    float grosstotal = ui->sale_lcd_total->value();
+
+    QString method; //payment method radioButton
+    if(ui->sale_Mtn_radioButton->isChecked())
+    {
+        method = ui->sale_Mtn_radioButton->text();
+    }else if(ui->sale_vodafone_radioButton->isChecked())
+    {
+        method = ui->sale_vodafone_radioButton->text();
+    }else if(ui->sale_creditCard_radioButton->isChecked())
+    {
+        method = ui->sale_creditCard_radioButton->text();
+    }else if(ui->sale_cash__radioButton->isChecked())
+    {
+        method = ui->sale_cash__radioButton->text();
+    }else
+    {
+        method = "not specified";
+    }
+    float payAmount = ui->sale_show_paid_cash->text().toFloat();
+    QString accountNumber = ui->sale_show_accnt_No->text();
+    QString paidNumber = ui->sale_show_paid_number->text();
+    float change = ui->sale_lcd_change->value();
+    float Total = ui->sale_lcd_total->value();
+    QString custName = ui->txt_customer_name->text();
+    QString custPhone = ui->txt_customer_phone->text();
+    float DailySales = ui->sale_lcd_daily_sale->value();
+
+    //calling method to handle sales in sales_Table in the database
+    handler.sales(sales_iD, batchCode, itemName, category, quantityStatus, quantity, Sellingprice, recommend, shell, description, remains, expireDate, tax, discount, grosstotal, method, payAmount, accountNumber, paidNumber, change, Total, custName, custPhone, DailySales);
+}
 

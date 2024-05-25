@@ -2,7 +2,11 @@
 #define LOGIN_H
 
 #include <QWidget>
+#include "databasehandler.h"
+
 #include <QTimer>
+#include <QMessageBox>
+#include <QRandomGenerator>
 
 namespace Ui {class Login;}
 
@@ -21,9 +25,11 @@ private slots:
 
 public Q_SLOT:
     void hideLoginWidget();
+    void OpenHomePage();
 
 private:
     Ui::Login *ui;
+    DatabaseHandler handler;
 };
 
 #endif // LOGIN_H

@@ -6,6 +6,12 @@ Login::Login(QWidget *parent) : QWidget(parent), ui(new Ui::Login)
 {
     ui->setupUi(this);
 
+    //database connection initialization
+    if(!handler.OpenDatabase("localhost", "x35", "postgres", "smartgirl@35"))
+    {
+        qDebug()<<"failed to connect to server";
+    }
+
     //making the stock form framless
     setWindowFlags(Qt::FramelessWindowHint);
 
@@ -58,16 +64,11 @@ Login::Login(QWidget *parent) : QWidget(parent), ui(new Ui::Login)
     timer->setInterval(100);
     timer->start();//begin timer
 
-
-
     //adding items to the comboBox
-    QStringList list ={"--default--", "Employee", "Admin", "Supervisor"};
+    QStringList list ={"--default--", "Sales person", "Admin", "Supervisor"};
     ui->cmb_status->addItems(list);
     ui->cmb_status->setCurrentIndex(0);
-
 }
-
-
 
 //exiting login form
 void Login::on_btn_exit_clicked()
@@ -78,14 +79,14 @@ void Login::on_btn_exit_clicked()
 //email and password validation(pull them from the database)
 void Login::on_btn_login01_clicked()
 {
-    static Index *index = nullptr; //creating an object for the homepage and use it to access it when credentials are right
+    QString user_status = ui->cmb_status->currentText();
+    QString user_email = ui->txt_email->text();
+    QString user_pass = ui->txt_password->text();
 
-    if(!index)
+    if(handler.UserLogin(user_status, user_email, user_pass))
     {
-        index = new Index();
+        OpenHomePage();
     }
-    close();
-    index->show();
 }
 
 //function to hide some widget on the login form
@@ -107,4 +108,15 @@ void Login::hideLoginWidget()
 Login::~Login()
 {
     delete ui;
+}
+
+void Login::OpenHomePage()
+{
+    static Index *index = nullptr;
+    if(!index)
+    {
+        index = new Index();
+    }
+    close();
+    index->show();
 }

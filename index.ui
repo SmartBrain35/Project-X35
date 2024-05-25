@@ -57,7 +57,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(255, 255, 0);</string>
+    <string notr="true">color:lime;</string>
    </property>
    <property name="text">
     <string>00:00:00</string>
@@ -203,7 +203,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color: white;</string>
+    <string notr="true">color:lime;</string>
    </property>
    <property name="text">
     <string>Copyright @ 2023. All rights are reserved.</string>
@@ -241,7 +241,7 @@
     </font>
    </property>
    <property name="styleSheet">
-    <string notr="true">color:rgb(255, 255, 0);</string>
+    <string notr="true">color:lime;</string>
    </property>
    <property name="text">
     <string>Developed by: Smart-Brain</string>
@@ -449,7 +449,7 @@
     <enum>QFrame::Panel</enum>
    </property>
    <property name="currentIndex">
-    <number>3</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="sale">
     <widget class="QTabWidget" name="my_sales_tabs">
@@ -485,7 +485,7 @@
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <property name="tabsClosable">
       <bool>true</bool>
@@ -577,7 +577,7 @@
          <x>10</x>
          <y>100</y>
          <width>341</width>
-         <height>471</height>
+         <height>601</height>
         </rect>
        </property>
        <property name="font">
@@ -1264,7 +1264,7 @@ border-radius: 10px;</string>
          <string>lower body temperature, minor headache</string>
         </property>
        </widget>
-       <widget class="QLabel" name="label_657">
+       <widget class="QLabel" name="invoice_id_label">
         <property name="geometry">
          <rect>
           <x>720</x>
@@ -1398,9 +1398,9 @@ color: red;</string>
        <property name="geometry">
         <rect>
          <x>10</x>
-         <y>570</y>
+         <y>710</y>
          <width>341</width>
-         <height>321</height>
+         <height>181</height>
         </rect>
        </property>
        <property name="font">
@@ -1429,7 +1429,7 @@ color: red;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>120</y>
+          <y>50</y>
           <width>291</width>
           <height>51</height>
          </rect>
@@ -1455,7 +1455,7 @@ border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>100</y>
+          <y>30</y>
           <width>61</width>
           <height>16</height>
          </rect>
@@ -1475,7 +1475,7 @@ border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>190</y>
+          <y>120</y>
           <width>291</width>
           <height>51</height>
          </rect>
@@ -1501,7 +1501,7 @@ border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>170</y>
+          <y>100</y>
           <width>71</width>
           <height>16</height>
          </rect>
@@ -1515,98 +1515,6 @@ border-radius: 10px;</string>
         </property>
         <property name="text">
          <string>Phone:</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="txt_customer_address">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>260</y>
-          <width>291</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: black;
-background: white;
-border-radius: 10px;</string>
-        </property>
-        <property name="maxLength">
-         <number>20</number>
-        </property>
-        <property name="placeholderText">
-         <string>Miami street, Santasi</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_622">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>240</y>
-          <width>91</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>Address:</string>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_623">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>30</y>
-          <width>41</width>
-          <height>16</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="text">
-         <string>ID:</string>
-        </property>
-       </widget>
-       <widget class="QLineEdit" name="txt_customer_id">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>50</y>
-          <width>291</width>
-          <height>51</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <pointsize>9</pointsize>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: black;
-background: white;
-border-radius: 10px;</string>
-        </property>
-        <property name="maxLength">
-         <number>20</number>
-        </property>
-        <property name="placeholderText">
-         <string>1000512</string>
         </property>
        </widget>
       </widget>
@@ -2830,7 +2738,10 @@ color:black;</string>
         </size>
        </property>
        <property name="default">
-        <bool>true</bool>
+        <bool>false</bool>
+       </property>
+       <property name="flat">
+        <bool>false</bool>
        </property>
       </widget>
       <widget class="QPushButton" name="sale_btn_new_records">
@@ -3262,7 +3173,7 @@ color:black;</string>
         <string notr="true">border-color: rgb(32, 197, 186);</string>
        </property>
        <property name="text">
-        <string>Delete</string>
+        <string>base</string>
        </property>
        <property name="iconSize">
         <size>
@@ -5186,7 +5097,7 @@ color: red;</string>
       <enum>QTabWidget::Triangular</enum>
      </property>
      <property name="currentIndex">
-      <number>3</number>
+      <number>0</number>
      </property>
      <property name="elideMode">
       <enum>Qt::ElideLeft</enum>
@@ -5293,7 +5204,7 @@ color: red;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>250</y>
+          <y>260</y>
           <width>281</width>
           <height>61</height>
          </rect>
@@ -5310,7 +5221,7 @@ color: black; border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>330</y>
+          <y>350</y>
           <width>281</width>
           <height>61</height>
          </rect>
@@ -5357,7 +5268,7 @@ color: black; border-radius: 10px;</string>
          <bool>true</bool>
         </property>
        </widget>
-       <widget class="QPushButton" name="btn_add_user">
+       <widget class="QPushButton" name="btn_add_NewUser">
         <property name="geometry">
          <rect>
           <x>30</x>
@@ -5530,7 +5441,7 @@ color: black; border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>230</y>
+          <y>240</y>
           <width>61</width>
           <height>20</height>
          </rect>
@@ -5543,7 +5454,7 @@ color: black; border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>310</y>
+          <y>330</y>
           <width>71</width>
           <height>20</height>
          </rect>
@@ -5658,7 +5569,7 @@ color: black; border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>410</y>
+          <y>440</y>
           <width>281</width>
           <height>61</height>
          </rect>
@@ -5675,7 +5586,7 @@ color: black; border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>390</y>
+          <y>420</y>
           <width>61</width>
           <height>20</height>
          </rect>
@@ -5684,41 +5595,11 @@ color: black; border-radius: 10px;</string>
          <string>Email:</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="settings_user_address">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>570</y>
-          <width>281</width>
-          <height>81</height>
-         </rect>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">background-color: white;
-color: black; border-radius: 10px;</string>
-        </property>
-        <property name="clearButtonEnabled">
-         <bool>true</bool>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_474">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>550</y>
-          <width>61</width>
-          <height>20</height>
-         </rect>
-        </property>
-        <property name="text">
-         <string>Address:</string>
-        </property>
-       </widget>
        <widget class="QLineEdit" name="settings_user_password">
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>490</y>
+          <y>530</y>
           <width>281</width>
           <height>61</height>
          </rect>
@@ -5735,7 +5616,7 @@ color: black; border-radius: 10px;</string>
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>470</y>
+          <y>510</y>
           <width>81</width>
           <height>20</height>
          </rect>
@@ -5771,7 +5652,7 @@ color: black; border-radius: 10px;</string>
          </rect>
         </property>
         <property name="text">
-         <string>Id:</string>
+         <string>Id Card:</string>
         </property>
        </widget>
        <widget class="Line" name="line_5">
@@ -10528,7 +10409,7 @@ color: red;</string>
        <string>User</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QPushButton" name="btn_chart">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -10589,7 +10470,7 @@ color: red;</string>
        <string notr="true">color: white;</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_2">
+     <widget class="QPushButton" name="btn_preview">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -10624,7 +10505,7 @@ color: red;</string>
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QPushButton" name="btn_next_4">
+        <widget class="QPushButton" name="btn_previous">
          <property name="font">
           <font>
            <family>Segoe UI</family>
@@ -10642,7 +10523,7 @@ color: red;</string>
         </widget>
        </item>
        <item>
-        <widget class="QPushButton" name="btn_next_3">
+        <widget class="QPushButton" name="btn_forward">
          <property name="font">
           <font>
            <family>Segoe UI</family>

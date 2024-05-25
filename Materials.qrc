@@ -40,5 +40,6 @@
         <file>images/pxfuel (1).jpg</file>
         <file>images/STOCK.jpg</file>
         <file>images/user.jpg</file>
+        <file>Database/script.sql</file>
     </qresource>
 </RCC>

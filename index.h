@@ -1,42 +1,36 @@
 #ifndef INDEX_H
 #define INDEX_H
-
+#include <databasehandler.h>
 #include <QWidget>
 #include <QDesktopWidget>
+
 //time and date
 #include <ctime>
-#include <QTimer>
-#include <chrono>
-#include <sstream>
+#include <QTime>
 #include <iomanip>
 #include <QDebug>
 
 //text browsing
 #include <QFile>
 #include <QTextStream>
-#include <QStringListModel>
-#include <QTimer>
 #include <QFileDialog>
-#include <QMessageBox>
 
 //sound engine
 #include <QtTextToSpeech/QTextToSpeech>
 #include <QVector>
 #include <QLoggingCategory>
 
-//database
-#include <QSql>
-#include <QtSql/QSqlDatabase>
-#include <QtSql/QSqlDriver>
-#include <QtSql/QSqlQuery>
-#include <QtSql/QSqlResult>
-#include <QtSql/QSqlQueryModel>
-#include <QtSql/QSqlRecord>
-#include <QtSql/QSqlTableModel>
-
 //general
+#include <QStringListModel>
 #include <QMessageBox>
 #include <QDebug>
+#include <QTimer>
+#include <QString>
+
+//tray pop-up
+#include <QSystemTrayIcon>
+#include <QAction>
+#include <QMenu>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Index; }
@@ -56,6 +50,9 @@ public Q_SLOT:   //function declarations
     void UpdateSearchDrugOutcome(const QString &text);
     void navigatePages(int index);
     void graphicPageNavigation();
+    void reportPageNavigation(int index);
+    void SettingUser();
+
     //sound slots
     void speak();
     void stop();
@@ -71,6 +68,9 @@ public Q_SLOT:   //function declarations
 
     void localeChanged(const QLocale &locale);
     void ReadLogMessage(QString log);
+    void HandleACtion();
+    void trayMessage(const QString &title, const QString &message, int duration = 60);
+    void updateTime();
 
 private slots:
     void on_btn_exit_clicked();
@@ -89,15 +89,29 @@ private slots:
 
     void on_browse_user_photo_clicked();
 
-    void on_btn_connect_clicked();
+
+    void on_btn_add_NewUser_clicked();
+
+    void on_sale_btn_save_clicked();
 
 private:
     Ui::Index *ui;
+    //database server
+    DatabaseHandler handler;
+
+    //speech`
     QTextToSpeech *m_speech;
     QVector<QVoice> m_voices;
 
     //text browsing class
     QStringList drugsData;
 
+    //system tray
+    QSystemTrayIcon *trayIcon;
+    QMenu *trayMenu;
+
+    //timer class
+    QTimer *timer = new QTimer();
+    QTimer *timer2 = new QTimer();
 };
 #endif // INDEX_H
